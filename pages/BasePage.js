@@ -1,6 +1,7 @@
 export class BasePage {
     constructor(page) {
         this.page = page;
+        this.userMenu = page.locator('span[data-qa="expand_account_menu"]');
         this.rejectCookiesBtn = page.getByRole("button", { name: "Reject All" });
     }
 
