@@ -9,22 +9,37 @@ test.describe("Login Functionality", () => {
 
     test.beforeEach(async ({ page }) => {
         const loginModal = new LoginModal(page);
-        await loginModal.navigate("https://jackentertainment.lv-stg.gameaccount.com/");
-        await loginModal.handleInitialPopups();
-        await expect(loginModal.loginTrigger).toBeVisible();
+        
+        await test.step("Navigate to site and clear popups", async () => {
+            await loginModal.navigate("https://jackentertainment.lv-stg.gameaccount.com/");
+            await loginModal.handleInitialPopups();
+            await expect(loginModal.loginTrigger).toBeVisible();
+        });
     });
 
     test("User can login successfully using Username", async ({ page }) => {
         const loginModal = new LoginModal(page);
-        await loginModal.login(STATIC_USER, PASSWORD);
+
+        await test.step(`Attempt login with username: ${STATIC_USER}`, async () => {
+            await loginModal.login(STATIC_USER, PASSWORD);
+        });
         
-        await expect(page.locator(".Header_iconUserMenu__Esu1M")).toBeVisible();
+        await test.step("Verify username appears correctly in the side menu", async () => {
+            const displayedName = await loginModal.getLoggedInUsername();
+            expect(displayedName).toContain(STATIC_USER);
+        });
     });
 
     test("User can login successfully using Email", async ({ page }) => {
         const loginModal = new LoginModal(page);
-        await loginModal.login(STATIC_EMAIL, PASSWORD);
+
+        await test.step(`Attempt login with email: ${STATIC_EMAIL}`, async () => {
+            await loginModal.login(STATIC_EMAIL, PASSWORD);
+        });
         
-        await expect(page.locator(".Header_iconUserMenu__Esu1M")).toBeVisible();
+        await test.step("Verify username appears correctly in the side menu after email login", async () => {
+            const displayedName = await loginModal.getLoggedInUsername();
+            expect(displayedName).toContain(STATIC_USER);
+        });
     });
 });
