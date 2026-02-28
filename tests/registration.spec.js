@@ -16,7 +16,7 @@ test.describe("Registration & Bonus Check", () => {
     }) => {
         const registrationModal = new RegistrationModal(page);
         const historyPage = new AccountHistoryPage(page);
-        // Generate unique credentials for each test run
+        // Generate unique credentials for each test run. Change the range if you need more unique users.
         const user = `test38${Math.floor(Math.random() * 10)}`;
         const email = `testing38${Math.floor(Math.random() * 10)}@email.com`;
 
