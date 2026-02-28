@@ -11,7 +11,6 @@ export class RegistrationModal extends BasePage {
         this.termsContainer = page.locator("[class*='RegistrationModal_termsWrap']");
         this.termsCheckbox = page.getByText("By submitting my registration");
         this.continueBtn = page.getByRole("button", { name: "Continue" });
-        this.welcomeBonusText = page.getByText(/CHIPS\+ \d+/);
         this.startBtn = page.getByRole("button", { name: "Let's start" });
     }
 
@@ -27,8 +26,4 @@ export class RegistrationModal extends BasePage {
         await this.continueBtn.click();
     }
 
-    async getWelcomeBonusAmount() {
-        const text = await this.welcomeBonusText.textContent();
-        return Number(text.split(" ")[0].split(",").join(""));
-    }
 }
